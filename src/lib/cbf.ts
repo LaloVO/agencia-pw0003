@@ -3,17 +3,17 @@ const getBaseUrl = () => {
   if (envUrl && envUrl.trim() !== "" && envUrl.trim() !== "undefined") {
     return envUrl.trim();
   }
-  
   if (typeof window !== "undefined") {
     if (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1") {
       return "http://localhost:3000/api/cbf";
     }
   }
-  return "https://homepty-cbf-tite-testing-chi.vercel.app/api/cbf"; // fallback producción
+  return "https://homepty-cbf-tite-testing-chi.vercel.app/api/cbf";
 };
 
 const BASE_URL = getBaseUrl();
-const API_KEY = (import.meta.env.VITE_CBF_API_KEY as string) || "cbf_live_YOUR_KEY_HERE";
+// API key de Anabel Carranza en user_sites — actualizar cuando se registre en Supabase
+const API_KEY = (import.meta.env.VITE_CBF_API_KEY as string) || "cbf_live_ANABEL_KEY_PENDING";
 
 export interface CBFImage {
   image_url: string;
@@ -22,18 +22,24 @@ export interface CBFImage {
 export interface CBFProperty {
   id: string;
   nombre: string;
-  descripcion?: string;
+  descripcion?: string | null;
   tipo?: string;
   precio: number;
+  moneda?: string;
   area?: number;
+  area_construida?: number | null;
   habitaciones?: number;
   banios?: number;
-  estacionamientos?: number;
+  medios_banios?: number;
+  estacionamientos?: number | null;
   direccion?: string;
-  colonia?: string;
+  colonia?: string | null;
+  ciudad_nombre?: string;
+  estado_nombre?: string;
   id_tipo_accion?: number;
-  latitud?: number;
-  longitud?: number;
+  latitud?: number | null;
+  longitud?: number | null;
+  caracteristicas?: string;
   imagenes_propiedades?: CBFImage[];
 }
 
@@ -41,15 +47,15 @@ export interface CBFUser {
   id: string;
   nombre_usuario: string;
   email_usuario: string;
-  telefono_usuario?: string;
-  imagen_perfil_usuario?: string;
+  telefono_usuario?: string | null;
+  imagen_perfil_usuario?: string | null;
 }
 
 export interface CBFSite {
   id: string;
   site_name: string;
-  subdomain?: string;
-  theme_config?: { logo?: string; primaryColor?: string };
+  subdomain?: string | null;
+  theme_config?: { logo?: string | null; primaryColor?: string };
   platform_config?: { mapbox_token?: string | null };
 }
 
@@ -65,26 +71,6 @@ export async function fetchSiteUser(): Promise<{ user: CBFUser; site: CBFSite }>
   return json.data;
 }
 
-export const HECTOR_EXCLUSIVE_PROPERTY: CBFProperty = {
-  id: "hector-exclusive-1",
-  nombre: "Residencia Las Alamedas",
-  descripcion: "Exclusiva residencia contemporánea con excelentes acabados de mármol y piedra natural, amplios ventanales que brindan una iluminación inigualable, cochera techada para dos autos y un balcón frontal con vistas arboladas. Ubicada en zona de alta plusvalía con seguridad privada las 24 horas en Saltillo, Coah.",
-  tipo: "casa",
-  precio: 4890000,
-  area: 310,
-  habitaciones: 3,
-  banios: 3.5,
-  estacionamientos: 2,
-  direccion: "Las Alamedas, Zona Norte",
-  colonia: "Saltillo",
-  id_tipo_accion: 1, // Venta
-  latitud: 25.4383,
-  longitud: -100.9737,
-  imagenes_propiedades: [
-    { image_url: "/hector-prop.png" }
-  ]
-};
-
 export async function fetchProperties(params?: {
   limit?: number;
   offset?: number;
@@ -98,45 +84,32 @@ export async function fetchProperties(params?: {
   if (params?.id_tipo_accion !== undefined)
     query.set("id_tipo_accion", String(params.id_tipo_accion));
 
-  try {
-    const res = await fetch(`${BASE_URL}/properties?${query}`, { headers: headers() });
-    if (!res.ok) throw new Error("Error al cargar propiedades");
-    const json = await res.json();
-    
-    // Prepend Hector's custom premium property to the list
-    const originalData = json.data || [];
-    const filteredOriginal = originalData.filter((p: CBFProperty) => p.id !== "hector-exclusive-1");
-    
-    return {
-      data: [HECTOR_EXCLUSIVE_PROPERTY, ...filteredOriginal],
-      pagination: json.pagination || { limit: 10, offset: 0, total: 1 }
-    };
-  } catch (err) {
-    // If offline or API fails, return our premium property as fallback
-    return {
-      data: [HECTOR_EXCLUSIVE_PROPERTY],
-      pagination: { limit: 10, offset: 0, total: 1 }
-    };
-  }
+  const res = await fetch(`${BASE_URL}/properties?${query}`, { headers: headers() });
+  if (!res.ok) throw new Error("Error al cargar propiedades");
+  return res.json();
 }
 
 export async function fetchProperty(id: string): Promise<CBFProperty> {
-  if (id === "hector-exclusive-1") {
-    return HECTOR_EXCLUSIVE_PROPERTY;
-  }
-  
   const res = await fetch(`${BASE_URL}/properties/${id}`, { headers: headers() });
   if (!res.ok) throw new Error("Propiedad no encontrada");
   const json = await res.json();
   return json.data ?? json;
 }
 
-export function formatPrice(precio: number): string {
+export function formatPrice(precio: number, moneda = "MXN"): string {
   return new Intl.NumberFormat("es-MX", {
     style: "currency",
-    currency: "MXN",
+    currency: moneda === "USD" ? "USD" : "MXN",
     maximumFractionDigits: 0,
   }).format(precio);
+}
+
+export function actionLabel(id?: number): string {
+  const map: Record<number, string> = {
+    1: "En Venta", 2: "En Renta", 3: "Traspaso",
+    4: "Pre-Venta", 5: "Aportación", 6: "Remate",
+  };
+  return id ? (map[id] ?? "En Venta") : "En Venta";
 }
 
 export interface LeadSubmission {
@@ -173,7 +146,7 @@ export async function submitLead(lead: LeadSubmission): Promise<{ success: boole
   });
   if (!res.ok) {
     const errorJson = await res.json().catch(() => ({}));
-    throw new Error(errorJson.error || "Error al enviar la solicitud de búsqueda inteligente");
+    throw new Error(errorJson.error || "Error al enviar la solicitud");
   }
   return res.json();
 }

@@ -1,95 +1,104 @@
-import { Link } from "react-router-dom";
-import { Sparkles, ArrowRight, Heart, Shield } from "lucide-react";
+import { Link } from 'react-router-dom';
+import { ArrowRight, CheckCircle2, Lock } from 'lucide-react';
+import { useEffect, useRef, useState } from 'react';
 
 export default function SmartSearchCTA() {
+  const sectionRef = useRef<HTMLElement>(null);
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) setIsVisible(true); },
+      { threshold: 0.1 }
+    );
+    if (sectionRef.current) observer.observe(sectionRef.current);
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <section className="py-24 bg-background border-t border-border/40 relative overflow-hidden">
-      {/* Background Decorative Blobs */}
-      <div className="absolute top-1/4 -left-20 w-80 h-80 rounded-full bg-neutral-900/5 blur-3xl" />
-      <div className="absolute bottom-1/4 -right-20 w-96 h-96 rounded-full bg-neutral-900/5 blur-3xl" />
-
-      <div className="max-w-6xl mx-auto px-6 relative z-10">
+    <section ref={sectionRef} className="py-24 px-6 md:px-12 bg-[#EDE0F3]/50 border-t border-[#C8A8D0]/30">
+      <div className="anabel-container">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-          
-          {/* Columna Texto: Editorial Revista Lujo */}
+
           <div className="lg:col-span-6 space-y-6">
-
-            
-            <h2 className="font-serif text-3xl md:text-5xl text-foreground font-medium tracking-tight leading-tight">
-              Encuentra la residencia ideal según tu estilo de vida
+            <span
+              className={`text-primary text-[10px] uppercase tracking-[0.35em] font-bold block transition-all duration-700 ${
+                isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+              }`}
+            >
+              Búsqueda Inteligente
+            </span>
+            <h2
+              className={`font-sans font-black text-3xl md:text-4xl text-[#3D1A54] leading-tight transition-all duration-700 delay-100 ${
+                isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+              }`}
+            >
+              Define tu perfil, nosotros encontramos tu hogar
             </h2>
-            
-            <p className="font-sans text-sm md:text-base text-neutral-600 leading-relaxed">
-              Deja de buscar propiedades en listas rígidas. A través de nuestro embudo calificado de 6 pasos, define tus necesidades reales, tu presupuesto viable, tus métodos de financiamiento y documentación. 
-            </p>
-            
-            <p className="font-sans text-xs md:text-sm text-neutral-500 leading-relaxed">
-              Nuestro motor avanzado analiza tu rutina diaria para conectar tu perfil con residencias que realmente potencien tu bienestar.
+            <p
+              className={`font-sans text-sm text-muted-foreground leading-relaxed transition-all duration-700 delay-200 ${
+                isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+              }`}
+            >
+              A través de nuestro embudo calificado de 6 pasos, cuéntame qué necesitas, cuál es tu presupuesto y qué método de financiamiento tienes disponible. Yo te conecto con la propiedad perfecta.
             </p>
 
-            <div className="grid grid-cols-2 gap-6 pt-4 border-t border-border/50">
-              <div className="flex gap-2">
-                <Heart className="w-5 h-5 text-neutral-500 shrink-0" />
-                <div>
-                  <h4 className="font-sans font-bold text-xs text-foreground">Búsqueda por Rutina</h4>
-                  <p className="text-[10px] text-neutral-500 mt-0.5">Analizamos tus necesidades familiares e internet.</p>
+            <div
+              className={`grid grid-cols-1 sm:grid-cols-2 gap-4 transition-all duration-700 delay-300 ${
+                isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+              }`}
+            >
+              {[
+                { icon: CheckCircle2, titulo: 'Perfil personalizado', desc: 'Recámaras, zona, estilo de vida y más.' },
+                { icon: Lock, titulo: 'Expediente seguro', desc: 'Tus documentos protegidos y privados.' },
+              ].map(({ icon: Icon, titulo, desc }) => (
+                <div key={titulo} className="flex gap-3">
+                  <Icon className="w-5 h-5 text-primary shrink-0 mt-0.5" />
+                  <div>
+                    <h4 className="font-sans font-bold text-xs text-foreground">{titulo}</h4>
+                    <p className="text-[10px] text-muted-foreground mt-0.5">{desc}</p>
+                  </div>
                 </div>
-              </div>
-              <div className="flex gap-2">
-                <Shield className="w-5 h-5 text-neutral-500 shrink-0" />
-                <div>
-                  <h4 className="font-sans font-bold text-xs text-foreground">Expediente Seguro</h4>
-                  <p className="text-[10px] text-neutral-500 mt-0.5">Tus documentos protegidos por cifrado central.</p>
-                </div>
-              </div>
+              ))}
             </div>
 
-            <div className="pt-4">
+            <div className={`transition-all duration-700 delay-400 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
               <Link
                 to="/solicita-inmueble"
-                className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-black hover:bg-neutral-800 text-white rounded-full font-sans font-medium text-sm transition-all duration-300 shadow-elegant hover:scale-105"
+                className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-[#5B2D7B] text-white font-sans font-bold text-sm tracking-widest uppercase hover:bg-[#3D1A54] transition-all duration-300 shadow-md hover:scale-105"
               >
-                Comenzar Búsqueda Inteligente
+                Comenzar Búsqueda
                 <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
           </div>
 
-          {/* Columna Imagen: Luxury Floating Card Mockup */}
-          <div className="lg:col-span-6 relative flex items-center justify-center">
-            
-            {/* Imagen Principal */}
-            <div className="aspect-[4/3] w-full max-w-lg rounded-3xl overflow-hidden shadow-elegant border border-white/40 relative">
+          {/* Imagen decorativa */}
+          <div
+            className={`lg:col-span-6 relative transition-all duration-700 delay-200 ${
+              isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
+            }`}
+          >
+            <div className="aspect-[4/3] rounded-3xl overflow-hidden shadow-xl">
               <img
-                src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=800&auto=format&fit=crop"
-                alt="Luxury Estate Lifestyle"
+                src="https://images.unsplash.com/photo-1584738766473-61c083514bf4?q=80&w=800&auto=format&fit=crop"
+                alt="Familia en su nuevo hogar"
                 className="w-full h-full object-cover"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#3D1A54]/20 to-transparent rounded-3xl" />
             </div>
 
-            {/* Tarjeta Glassmorphic Flotante (Mockup del Funnel) */}
-            <div className="absolute -bottom-6 left-6 md:-left-6 max-w-xs bg-white/60 backdrop-blur-lg border border-white/50 rounded-2xl p-5 shadow-elegant animate-float">
-              <div className="flex items-center gap-3 mb-3">
-                <div className="w-8 h-8 rounded-full bg-black flex items-center justify-center font-serif text-sm text-white font-medium">
-                  IA
-                </div>
-                <div>
-                  <h5 className="font-sans font-bold text-xs text-foreground">Perfil de Estilo de Vida</h5>
-                  <span className="text-[9px] text-neutral-500 block">Evaluando requerimientos...</span>
-                </div>
+            {/* Tarjeta flotante */}
+            <div className="absolute -bottom-4 -left-4 md:-left-8 bg-white rounded-2xl p-4 shadow-xl border border-[#C8A8D0]/20 max-w-[220px]">
+              <div className="flex items-center gap-2 mb-2">
+                <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
+                <span className="font-sans text-[9px] font-bold uppercase tracking-widest text-[#5B2D7B]">Proceso completado</span>
               </div>
-
-              <p className="font-sans text-[11px] text-foreground italic leading-relaxed bg-white/50 p-2.5 rounded-xl border border-white/20">
-                &ldquo;Familia con 2 hijos pequeños y mascota. Requiere oficina para home office con internet de alta velocidad, jardín privado amplio, y escuelas bilingües a menos de 15 minutos de distancia.&rdquo;
+              <p className="font-sans text-xs text-[#3D1A54] font-medium leading-snug">
+                "Encontré mi casa con crédito Infonavit en menos de 30 días."
               </p>
-
-              <div className="flex items-center justify-between mt-3 text-[10px] font-sans font-semibold text-neutral-600">
-                <span>✓ Rango de Presupuesto: Apto</span>
-                <span>Match: 96%</span>
-              </div>
+              <p className="font-sans text-[9px] text-muted-foreground mt-1.5">— Cliente satisfecha, Saltillo</p>
             </div>
-
           </div>
 
         </div>

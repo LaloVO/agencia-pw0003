@@ -66,10 +66,10 @@ export default {
         },
       },
       fontFamily: {
-        serif: ['"Playfair Display"', 'Georgia', 'serif'],
-        italiana: ['"Italiana"', 'serif'],
-        script: ['"Alex Brush"', 'cursive'],
-        sans: ['"Inter"', 'system-ui', 'sans-serif'],
+        serif: ['"Montserrat"', 'system-ui', 'sans-serif'],
+        sans:  ['"Montserrat"', 'system-ui', 'sans-serif'],
+        italiana: ['"Montserrat"', 'sans-serif'],
+        script: ['"Montserrat"', 'sans-serif'],
       },
       borderRadius: {
         lg: "var(--radius)",

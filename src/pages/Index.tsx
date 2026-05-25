@@ -2,20 +2,20 @@ import { Helmet } from 'react-helmet-async';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import HeroSection from '@/components/home/HeroSection';
-import PhilosophySection from '@/components/home/PhilosophySection';
+import ServiciosStrip from '@/components/home/ServiciosStrip';
 import PropertiesSection from '@/components/home/PropertiesSection';
-import AgentsSection from '@/components/home/AgentsSection';
-import AIFeatureSection from '@/components/home/AIFeatureSection';
+import FinanciamientoSection from '@/components/home/FinanciamientoSection';
+import AnabelImmersive from '@/components/home/AnabelImmersive';
 import SmartSearchCTA from '@/components/home/SmartSearchCTA';
 
 const Index = () => {
   return (
     <>
       <Helmet>
-        <title>Héctor Contreras | Asesor Inmobiliario - Propiedades de Lujo en México</title>
+        <title>Anabel Carranza | Asesora Inmobiliaria Profesional - Saltillo, Coahuila</title>
         <meta
           name="description"
-          content="Descubre propiedades de lujo y preventas residenciales exclusivas en México con la curaduría y asesoría inmobiliaria de alta gama de Héctor Contreras."
+          content="Anabel Carranza, asesora inmobiliaria profesional en Saltillo. Compra, preventa y renta con financiamiento Infonavit, Cofinavit y Fovissste. Dreams Inmobiliaria."
         />
       </Helmet>
 
@@ -23,11 +23,11 @@ const Index = () => {
 
       <main>
         <HeroSection />
-        <PhilosophySection />
+        <ServiciosStrip />
         <PropertiesSection />
-        <AIFeatureSection />
+        <FinanciamientoSection />
+        <AnabelImmersive />
         <SmartSearchCTA />
-        <AgentsSection />
       </main>
 
       <Footer />
