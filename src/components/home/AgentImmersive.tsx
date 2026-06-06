@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Phone } from 'lucide-react';
 
-const AnabelImmersive = () => {
+const AgentImmersive = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const [isVisible, setIsVisible] = useState(false);
 
@@ -21,7 +21,7 @@ const AnabelImmersive = () => {
       className="relative overflow-hidden py-32 px-6 md:px-12"
       style={{ minHeight: '60vh' }}
     >
-      {/* Fondo morado pleno — foto de Anabel como background cuando esté disponible */}
+      {/* Fondo morado pleno — foto de Asesor Demo como background cuando esté disponible */}
       <div className="absolute inset-0 z-0">
         <div className="absolute inset-0 bg-[#3D1A54]" />
         {/* Patrón geométrico decorativo */}
@@ -63,7 +63,7 @@ const AnabelImmersive = () => {
                 isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
               }`}
             >
-              Soy Anabel Carranza, asesora inmobiliaria profesional certificada con más de 5 años de experiencia en el mercado de Saltillo y su área metropolitana. Me especializo en acompañar a familias en la compra de su primer hogar y en gestionar financiamiento hipotecario de principio a fin.
+              Soy Asesor Demo, asesora inmobiliaria profesional certificada con más de 5 años de experiencia en el mercado de Saltillo y su área metropolitana. Me especializo en acompañar a familias en la compra de su primer hogar y en gestionar financiamiento hipotecario de principio a fin.
             </p>
 
             <div
@@ -123,7 +123,7 @@ const AnabelImmersive = () => {
             {/* Tarjeta de certificación */}
             <div className="bg-[#5B2D7B]/50 border border-[#C8A8D0]/20 rounded-2xl p-6 hover:bg-[#5B2D7B]/70 transition-all duration-300">
               <p className="font-sans text-[10px] uppercase tracking-widest text-[#C8A8D0] mb-1">Agencia</p>
-              <p className="font-sans font-black text-white text-lg">Dreams Inmobiliaria</p>
+              <p className="font-sans font-black text-white text-lg">Agencia</p>
               <p className="font-sans text-xs text-white/50 mt-1">Profesionales certificados en bienes raíces</p>
             </div>
           </div>
@@ -134,4 +134,4 @@ const AnabelImmersive = () => {
   );
 };
 
-export default AnabelImmersive;
+export default AgentImmersive;

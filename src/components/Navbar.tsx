@@ -40,14 +40,14 @@ const Navbar = () => {
                 scrolledOrNotHome ? 'text-[#5B2D7B]' : 'text-white'
               }`}
             >
-              Anabel Carranza
+              Asesor Demo
             </span>
             <span
               className={`font-sans font-medium text-[9px] tracking-[0.3em] uppercase leading-none mt-0.5 transition-colors duration-300 ${
                 scrolledOrNotHome ? 'text-[#C8A8D0]' : 'text-white/70'
               }`}
             >
-              Dreams Inmobiliaria
+              Agencia
             </span>
           </div>
         </Link>
@@ -103,10 +103,10 @@ const Navbar = () => {
 
           <div className="flex flex-col items-center text-center mb-6">
             <span className="font-sans font-black text-2xl tracking-[0.12em] uppercase text-white leading-tight">
-              Anabel Carranza
+              Asesor Demo
             </span>
             <span className="font-sans text-[11px] tracking-[0.35em] uppercase text-[#C8A8D0] mt-1">
-              Dreams Inmobiliaria
+              Agencia
             </span>
           </div>
 

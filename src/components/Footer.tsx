@@ -10,10 +10,10 @@ const Footer = () => {
           <div className="md:col-span-5 space-y-5">
             <Link to="/" className="inline-block select-none">
               <span className="font-sans font-black text-xl tracking-[0.12em] uppercase text-white leading-tight block">
-                Anabel Carranza
+                Asesor Demo
               </span>
               <span className="font-sans text-[10px] tracking-[0.35em] uppercase text-[#C8A8D0] mt-0.5 block">
-                Dreams Inmobiliaria
+                Agencia
               </span>
             </Link>
             <p className="font-sans text-sm text-white/60 font-light max-w-sm leading-relaxed">
@@ -74,7 +74,7 @@ const Footer = () => {
         </div>
 
         <div className="mt-14 pt-6 border-t border-white/10 text-[10px] text-white/35 uppercase tracking-widest flex flex-col sm:flex-row justify-between gap-4">
-          <span>© 2026 Anabel Carranza · Dreams Inmobiliaria · Todos los derechos reservados</span>
+          <span>© 2026 Asesor Demo · Agencia · Todos los derechos reservados</span>
           <span>Aviso de Privacidad</span>
         </div>
       </div>

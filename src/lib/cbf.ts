@@ -12,8 +12,8 @@ const getBaseUrl = () => {
 };
 
 const BASE_URL = getBaseUrl();
-// API key de Anabel Carranza en user_sites — actualizar cuando se registre en Supabase
-const API_KEY = (import.meta.env.VITE_CBF_API_KEY as string) || "cbf_live_ANABEL_KEY_PENDING";
+// API key de Asesor Demo en user_sites — actualizar cuando se registre en Supabase
+const API_KEY = (import.meta.env.VITE_CBF_API_KEY as string) || "cbf_live_PENDING_UUID";
 
 export interface CBFImage {
   image_url: string;

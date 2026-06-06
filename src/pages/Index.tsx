@@ -5,17 +5,17 @@ import HeroSection from '@/components/home/HeroSection';
 import ServiciosStrip from '@/components/home/ServiciosStrip';
 import PropertiesSection from '@/components/home/PropertiesSection';
 import FinanciamientoSection from '@/components/home/FinanciamientoSection';
-import AnabelImmersive from '@/components/home/AnabelImmersive';
+import AgentImmersive from '@/components/home/AgentImmersive';
 import SmartSearchCTA from '@/components/home/SmartSearchCTA';
 
 const Index = () => {
   return (
     <>
       <Helmet>
-        <title>Anabel Carranza | Asesora Inmobiliaria Profesional - Saltillo, Coahuila</title>
+        <title>Asesor Demo | Asesora Inmobiliaria Profesional - Saltillo, Coahuila</title>
         <meta
           name="description"
-          content="Anabel Carranza, asesora inmobiliaria profesional en Saltillo. Compra, preventa y renta con financiamiento Infonavit, Cofinavit y Fovissste. Dreams Inmobiliaria."
+          content="Asesor Demo, asesora inmobiliaria profesional en Saltillo. Compra, preventa y renta con financiamiento Infonavit, Cofinavit y Fovissste. Agencia."
         />
       </Helmet>
 
@@ -26,7 +26,7 @@ const Index = () => {
         <ServiciosStrip />
         <PropertiesSection />
         <FinanciamientoSection />
-        <AnabelImmersive />
+        <AgentImmersive />
         <SmartSearchCTA />
       </main>
 
